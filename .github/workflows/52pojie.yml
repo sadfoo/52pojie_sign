@@ -1,0 +1,28 @@
+name: 吾爱破解签到
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 获取代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
+      - name: 执行签到
+        env:
+          PJ52_COOKIE: ${{ secrets.PJ52_COOKIE }}
+          PJ52_TOKEN: ${{ secrets.PJ52_TOKEN }}
+        run: python main.py
